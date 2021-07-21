@@ -31,7 +31,7 @@ public class swaggerconfig {
                 "HEALTH BLOOD BANK SYSTEM",
                 "VERSION",
                 "TERMS OF SERVICE URL",
-                new Contact("MSU","URL","EMAIL"),
+                new Contact("African Big Nerd","URL","EMAIL"),
                 "LICENSE",
                 "LICENSE URL",
                 Collections.emptyList()

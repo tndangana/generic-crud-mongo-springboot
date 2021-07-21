@@ -8,8 +8,10 @@ import zw.abn.inventory.service.generics.GenericsServiceClass;
 
 @RestController
 @RequestMapping("/api/bankblood")
-public class BankBloodResource extends GenericResource<BankBlood> {
+public class BankBloodResource extends GenericResource<BankBlood,String > {
     public BankBloodResource(GenericsServiceClass<BankBlood, String> service) {
         super(service);
     }
+
+
 }

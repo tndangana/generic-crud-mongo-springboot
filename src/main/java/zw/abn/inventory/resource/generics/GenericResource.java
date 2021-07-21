@@ -11,12 +11,13 @@ import zw.abn.inventory.service.generics.GenericsServiceClass;
 import java.util.List;
 import java.util.Optional;
 
+//T = entity
+//K = primary id
+public class GenericResource<T extends BaseID,K> {
 
-public class GenericResource<T extends BaseID> {
+    GenericsServiceClass<T,K> service;
 
-    GenericsServiceClass<T,String> service;
-
-    public GenericResource(GenericsServiceClass<T, String> service) {
+    public GenericResource(GenericsServiceClass<T,K> service) {
         this.service = service;
     }
 
@@ -45,7 +46,7 @@ public class GenericResource<T extends BaseID> {
         }
     }
     @GetMapping("/{id}")
-    public ResponseEntity<T> getOne(@PathVariable("id") String id){
+    public ResponseEntity<T> getOne(@PathVariable("id") K id){
         try{
             Optional<T> t = service.getOne(id);
             if(t.isPresent()){
@@ -60,17 +61,18 @@ public class GenericResource<T extends BaseID> {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<T> delete(@RequestBody T t){
+    public ResponseEntity<T> delete(@PathVariable("id") K id){
         try {
-             service.delete(t);
-             return new ResponseEntity<T>(HttpStatus.OK);
+            Optional<T> optionalT = Optional.of(service.getOne(id).get());
+             optionalT.ifPresent(t1 -> service.delete(t1));
+             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e){
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<T> update(@RequestBody T t,@PathVariable("id") String id){
+    public ResponseEntity<T> update(@RequestBody T t,@PathVariable("id") K id){
         try {
             return new ResponseEntity<>(service.update(t,id),HttpStatus.OK);
         }catch (Exception e){

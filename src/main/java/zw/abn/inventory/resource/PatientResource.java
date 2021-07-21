@@ -8,7 +8,7 @@ import zw.abn.inventory.service.generics.GenericsServiceClass;
 
 @RestController
 @RequestMapping("/api/patient")
-public class PatientResource extends GenericResource<Patient> {
+public class PatientResource extends GenericResource<Patient,String> {
     public PatientResource(GenericsServiceClass<Patient, String> service) {
         super(service);
     }
